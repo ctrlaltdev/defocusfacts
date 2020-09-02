@@ -1,7 +1,8 @@
 const Table = require('./Table')
 
 const FactStruc = {
-  fact: 'TEXT UNIQUE'
+  id: 'INTEGER PRIMARY KEY AUTOINCREMENT',
+  fact: 'TEXT'
 }
 
 const Facts = new Table('facts')
@@ -18,9 +19,9 @@ Facts.create = function (fact) {
   })
 }
 
-Facts.read = function (fact) {
+Facts.read = function (id) {
   return new Promise((res, rej) => {
-    this.db.get('SELECT * FROM facts WHERE fact = ?', fact, (err, row) => {
+    this.db.get('SELECT * FROM facts WHERE id = ?', id, (err, row) => {
       if (err) rej(err)
       res(row)
     })
@@ -36,9 +37,9 @@ Facts.list = function () {
   })
 }
 
-Facts.delete = function (fact) {
+Facts.delete = function (id) {
   return new Promise((res, rej) => {
-    this.db.run('DELETE FROM facts WHERE fact = ?', fact, (err, row) => {
+    this.db.run('DELETE FROM facts WHERE id = ?', id, (err, row) => {
       if (err) rej(err)
       res(row)
     })

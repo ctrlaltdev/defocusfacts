@@ -1,13 +1,14 @@
 const router = require('express').Router()
 const { Facts } = require('../models/')
 
-router.get('/', async (req, res) => {
+router.get('/fact/random', async (req, res) => {
   const allFacts = await Facts.list()
     .catch(err => {
       res.status(500).send(err)
     })
 
-  if (!allFacts) {
+  console.info(allFacts)
+  if (allFacts.length < 1) {
     res.send('No facts yet')
   } else {
     const random = Math.floor(Math.random() * allFacts.length)
@@ -29,12 +30,12 @@ router.get('/fact/:id', async (req, res) => {
 })
 
 router.post('/fact/', async (req, res) => {
-  const fact = await Facts.create(req.body)
+  const fact = await Facts.create(req.body.fact)
     .catch(err => {
       res.status(500).send(err)
     })
 
-  res.send(`Fact ${fact.id} created`)
+  res.send(`Fact created`)
 })
 
 router.delete('/fact/:id', async (req, res) => {
