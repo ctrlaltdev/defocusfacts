@@ -1,19 +1,19 @@
 const router = require('express').Router()
 const { Facts } = require('../models/')
 
-// router.get('/', async (req, res) => {
-//   const data = await Facts.list()
-//     .catch(err => {
-//       res.status(500).send(err)
-//     })
+router.get('/', async (req, res) => {
+  const allFacts = await Facts.list()
+    .catch(err => {
+      res.status(500).send(err)
+    })
 
-//   if (!data) {
-//     res.sendStatus(204)
-//   } else {
-//     const allFacts = data.map(c => c.name).sort()
-//     res.send(allFacts.join(', '))
-//   }
-// })
+  if (!allFacts) {
+    res.send('No facts yet')
+  } else {
+    const random = Math.floor(Math.random() * allFacts.length)
+    res.send(`Fact #${allFacts[random].id}: ${allFacts[random].fact}`)
+  }
+})
 
 router.get('/fact/:id', async (req, res) => {
   const fact = await Facts.read(req.params.id)
