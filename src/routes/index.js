@@ -12,7 +12,7 @@ router.get('/fact/random', async (req, res) => {
     res.send('No facts yet')
   } else {
     const random = Math.floor(Math.random() * allFacts.length)
-    res.send(`Fact #${allFacts[random].id}: ${allFacts[random].fact}`)
+    res.send(`[${allFacts[random].id}] ${allFacts[random].fact}`)
   }
 })
 
@@ -25,7 +25,7 @@ router.get('/fact/:id', async (req, res) => {
   if (!fact) {
     res.send('Fact not found')
   } else {
-    res.send(`Fact #${fact.id}: ${fact.fact}`)
+    res.send(`[${fact.id}] ${fact.fact}`)
   }
 })
 
@@ -43,7 +43,7 @@ router.delete('/fact/:id', async (req, res) => {
     .catch(err => {
       res.status(500).send(err)
     })
-  res.send(`Fact ${req.params.id} deleted`)
+  res.send(`Fact deleted`)
 })
 
 module.exports = router
